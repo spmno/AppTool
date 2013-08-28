@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/AppTool">
+        <file>res/images/background.png</file>
+        <file>res/qss/main_dialog.qss</file>
+        <file>res/images/filebutton_normal.png</file>
+        <file>res/images/filebutton_checked.png</file>
+        <file>res/images/edit_background.png</file>
+        <file>res/images/combo_background.png</file>
+        <file>res/images/dropdown.png</file>
+    </qresource>
+</RCC>

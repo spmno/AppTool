@@ -1,0 +1,32 @@
+QDialog, QWidget{
+  background-image: url(:/AppTool/res/images/background.png);
+}
+
+QPushButton{
+	background-image: url(:/AppTool/res/images/filebutton_normal.png);
+	border: 0px;
+}
+
+QPushButton:hover{
+	background-image: url(:/AppTool/res/images/filebutton_checked.png);
+	border: 0px;
+}
+
+QPushButton:checked{
+	background-image: url(:/AppTool/res/images/filebutton_checked.png);
+	border: 0px;
+}
+
+QLineEdit {
+	background-image: url(:/AppTool/res/images/edit_background.png);
+	border: 0px;
+}
+
+QComboBox {
+	background-image: url(:/AppTool/res/images/combo_background.png);
+	border :0px;
+}
+
+QComboBox::drop-down {
+	image: url(:/AppTool/res/images/dropdown.png);
+}
