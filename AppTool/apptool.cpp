@@ -2,6 +2,7 @@
 #include <qfiledialog.h>
 #include <qmessagebox.h>
 #include "SettingCenter.h"
+#include "Worker.h"
 AppTool::AppTool(QWidget *parent)
 	: QDialog(parent)
 {
@@ -12,7 +13,11 @@ AppTool::AppTool(QWidget *parent)
 	for (vector<string>::iterator iter = models.begin(); iter != models.end(); ++iter) {
 		ui.modelComboBox->addItem((*iter).c_str());
 	}
-	
+	if (!settingCenter.getSourceDir().isEmpty()) {
+		ui.sourceLineEdit->setText(settingCenter.getSourceDir());
+	}
+	ui.targetLineEdit->setText(QDir::currentPath());
+	ui.allRadioButton->setChecked(true);
 }
 
 AppTool::~AppTool()
@@ -27,6 +32,7 @@ void AppTool::selectSourceDictionary()
     fileDlg.setFileMode(QFileDialog::DirectoryOnly);
 	QString sourceDir = fileDlg.getExistingDirectory();
 	ui.sourceLineEdit->setText(sourceDir);
+	SettingCenter::getInstance().writeLastSourceDirToFile(sourceDir);
 }
 
 void AppTool::selectTargetDictionary()
@@ -61,8 +67,8 @@ void AppTool::startApp()
 		return;
 	}
 	settingCenter.setTargetDir(ui.targetLineEdit->text());
-
-
+	Worker worker;
+	worker.startAppImp();
 }
 
 

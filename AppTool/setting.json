@@ -1,4 +1,1 @@
-{
-"Model":["BM5133V", "BM5177V", "DV-450G", "GDM-4389", "GPS5133V", "H8033V", "RV-4377", "VW7033"],
-"Filter":["map", "pdb"]
-}
+{"Filter":["map","pdb"],"Model":["BM5133V","BM5177V","DV-450G","GDM-4389","GPS5133V","H8033V","RV-4377","VW7033"],"SourceDir":"E:/code/VOX/H8033V/Bin/CE/BSP_SDK(ARMV4I)"}

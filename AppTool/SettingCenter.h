@@ -72,6 +72,7 @@ public:
 	{
 		return filterContainer;
 	}
+	bool writeLastSourceDirToFile(QString& dir);
 private:
 	SettingCenter(void);
 	vector<string> modelContainer;

@@ -19,25 +19,28 @@ bool Worker::startAppImp()
 	//prepare -- make dir name, get filter
 	SettingCenter settingCenter = SettingCenter::getInstance();
 	QString targetDir = settingCenter.getTargetDir();
+	QString targetModelDir = targetDir + "/" + settingCenter.getCurrentModelName() + "/F33APP";
 	QString sourceDir = settingCenter.getSourceDir();
 	vector<string>& filter = settingCenter.getFilter();
+	/*
 	//copy files
-	if (!copyFilesWithFilter(sourceDir, targetDir, filter)) {
+	if (!copyFilesWithFilter(sourceDir, targetModelDir, filter)) {
 		QMessageBox::information(NULL, QStringLiteral("´íÎó"), QStringLiteral("¸´ÖÆ´íÎó"));
 		return false;
 	}
 
 	//del old zip
-	QDir toDir(targetDir);
+	QDir toDir(targetModelDir);
 	QString zipName = "F33App.zip";
 	if (toDir.exists(zipName)) {
 		toDir.remove(zipName);
 	}
-
+	*/
 	//edit appinfo
-	QString appInfoPath = targetDir + "\\Config\\AppConfigInfo.dat";
+	QString appInfoPath = targetModelDir + "\\Config\\AppConfigInfo.dat";
 	QString editCommand = "notepad";
 	exeCommand(editCommand, appInfoPath);
+	return true;
 
 	//create md5
 	QString md5PathFormat("%1\\%2");
@@ -113,9 +116,11 @@ void Worker::exeCommand(const QString& command, const QString& parameter)
 
 	shExecInfo.lpVerb = NULL;
 
-	shExecInfo.lpFile = command.toStdString().c_str();
+	string commandString = command.toStdString();
+	shExecInfo.lpFile = commandString.c_str();
 
-	shExecInfo.lpParameters = parameter.toStdString().c_str();
+	string parameterString = parameter.toStdString();
+	shExecInfo.lpParameters = parameterString.c_str();
 
 	shExecInfo.lpDirectory = NULL;
 
