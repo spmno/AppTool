@@ -1,10 +1,13 @@
 #include "apptool.h"
 #include <QtWidgets/QApplication>
 #include <QtCore/qfile.h>
+#include <qtextcodec.h>
 #include "SettingCenter.h"
 int main(int argc, char *argv[])
 {
+	QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF8")); 
 	QApplication a(argc, argv);
+	
 	QFile styleSheet(":/AppTool/res/qss/main_dialog.qss");
     if (!styleSheet.open(QIODevice::ReadOnly))
     {

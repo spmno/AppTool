@@ -12,5 +12,6 @@ public:
 	bool startAppImp();
 private:
 	bool copyFilesWithFilter(const QString& sourceDir, const QString& targetDir, const vector<string>& filter);
+	void exeCommand(const QString& command, const QString& parameter);
 };
 

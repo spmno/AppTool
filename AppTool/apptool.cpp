@@ -1,4 +1,4 @@
-#include "apptool.h"
+﻿#include "apptool.h"
 #include <qfiledialog.h>
 #include <qmessagebox.h>
 #include "SettingCenter.h"
@@ -49,6 +49,19 @@ void AppTool::startApp()
 	} else if (ui.compareRadioButton->isChecked()) {
 		settingCenter.setUpdateMethod(SettingCenter::COMPARE);
 	}
+
+	if (ui.sourceLineEdit->text().isEmpty()) {
+		QMessageBox::information(NULL, QStringLiteral("错误"), QStringLiteral("没有设置源目录"));
+		return;
+	}
+	settingCenter.setSourceDir(ui.sourceLineEdit->text());
+
+	if (ui.targetLineEdit->text().isEmpty()) {
+		QMessageBox::information(NULL, QStringLiteral("错误"), QStringLiteral("没有设置目标目录"));
+		return;
+	}
+	settingCenter.setTargetDir(ui.targetLineEdit->text());
+
 
 }
 
