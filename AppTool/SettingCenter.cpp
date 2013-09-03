@@ -1,8 +1,10 @@
 #include "SettingCenter.h"
+#include <Windows.h>
 #include <fstream>
 #include <QtCore/QString>
 #include <QtCore/qdir.h>
 #include <QMessageBox>
+#include <qtextcodec.h>
 #include "3party\jsoncpp-src-0.5.0\include\json\json.h"
 using namespace std;
 
@@ -18,12 +20,16 @@ SettingCenter::~SettingCenter(void)
 void SettingCenter::loadSetting()
 {
 	// read and parse json file
+
 	QString currentDir = QDir::currentPath();
-	QString jsonFileName = currentDir + "/setting.json";
+	string jsonFileName = currentDir.toStdString() + "/setting.json";
+	wchar_t wideJsonFileName[260];
 	ifstream jsonFileStream;
-	jsonFileStream.open(jsonFileName.toStdString().c_str());
+	MultiByteToWideChar(CP_UTF8, 0, jsonFileName.c_str(), -1, wideJsonFileName, 260);
+	jsonFileStream.open(wideJsonFileName);
+
 	if (!jsonFileStream.is_open()) {
-		QMessageBox::information(NULL, QStringLiteral("ERROR"), QStringLiteral("配置文件错误"));
+		QMessageBox::information(NULL, jsonFileName.c_str(), QStringLiteral("配置文件错误"));
 		exit(-1);
 	}
 	Json::Reader reader;
@@ -54,9 +60,11 @@ void SettingCenter::loadSetting()
 bool SettingCenter::writeLastSourceDirToFile(QString& dir) 
 {
 	QString currentDir = QDir::currentPath();
-	QString jsonFileName = currentDir + "/setting.json";
+	string jsonFileName = currentDir.toStdString() + "/setting.json";
+	wchar_t wideJsonFileName[260];
 	ifstream jsonFileStream;
-	jsonFileStream.open(jsonFileName.toStdString().c_str());
+	MultiByteToWideChar(CP_UTF8, 0, jsonFileName.c_str(), -1, wideJsonFileName, 260);
+	jsonFileStream.open(wideJsonFileName);
 	if (!jsonFileStream.is_open()) {
 		QMessageBox::information(NULL, QStringLiteral("ERROR"), QStringLiteral("配置文件错误"));
 		return false;
@@ -72,7 +80,7 @@ bool SettingCenter::writeLastSourceDirToFile(QString& dir)
 	jsonObject["SourceDir"] = dir.toStdString();
 	ofstream jsonOutStream;
 	Json::FastWriter writer;
-	jsonOutStream.open(jsonFileName.toStdString().c_str());
+	jsonOutStream.open(wideJsonFileName);
 	if (!jsonOutStream.is_open()) {
 		QMessageBox::information(NULL, QStringLiteral("ERROR"), QStringLiteral("输出配置文件错误"));
 		return false;

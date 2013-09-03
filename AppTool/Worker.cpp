@@ -3,6 +3,7 @@
 #include <shellapi.h>
 #include <qdir.h>
 #include <qmessagebox.h>
+#include <qprogressdialog.h>
 #include "SettingCenter.h"
 
 Worker::Worker(void)
@@ -22,7 +23,7 @@ bool Worker::startAppImp()
 	QString targetModelDir = targetDir + "/" + settingCenter.getCurrentModelName() + "/F33APP";
 	QString sourceDir = settingCenter.getSourceDir();
 	vector<string>& filter = settingCenter.getFilter();
-	/*
+	
 	//copy files
 	if (!copyFilesWithFilter(sourceDir, targetModelDir, filter)) {
 		QMessageBox::information(NULL, QStringLiteral("错误"), QStringLiteral("复制错误"));
@@ -35,12 +36,11 @@ bool Worker::startAppImp()
 	if (toDir.exists(zipName)) {
 		toDir.remove(zipName);
 	}
-	*/
+	
 	//edit appinfo
-	QString appInfoPath = targetModelDir + "\\Config\\AppConfigInfo.dat";
+	QString appInfoPath = targetModelDir + "/Config/AppConfigInfo.dat";
 	QString editCommand = "notepad";
-	exeCommand(editCommand, appInfoPath);
-	return true;
+	exeCommandUtillExit(editCommand, appInfoPath);
 
 	//create md5
 	QString md5PathFormat("%1\\%2");
@@ -49,13 +49,24 @@ bool Worker::startAppImp()
 	QString md5ParameterFormat("%1 %2");
 	QString md5UpdateMethod = settingCenter.getUpdateMethod();
 	QString md5Parameter = md5ParameterFormat.arg(md5Path).arg(md5UpdateMethod);
-	exeCommand(md5Command, md5Parameter);
+	exeCommandUtillExit(md5Command, md5Parameter);
 
 	//pagage zip
-	QString zipCommand = "zip";
+	QString oldPath = QDir::currentPath();
+	QString modelPath = oldPath + "/" + settingCenter.getCurrentModelName();
+	QDir::setCurrent(modelPath);
+	QString zipCommand = oldPath + "/zip.exe";
 	QString zipParameterFormat("%1 %2 %3 %4");
 	QString zipParameter = zipParameterFormat.arg("-1").arg("-r").arg("F33APP.zip").arg("F33APP");
-	exeCommand(zipCommand, zipParameter);
+	exeCommandUtillExit(zipCommand, zipParameter);
+	QDir::setCurrent(oldPath);
+
+	//open dir
+	wchar_t wideOpenDirPath[260];
+	string modelStdPath = modelPath.toStdString();
+	MultiByteToWideChar(CP_UTF8, 0, modelStdPath.c_str(), -1, wideOpenDirPath, 260);
+	QString openCommand = "explorer";
+	exeCommand(modelPath, "", false);
 
 	return true;
 }
@@ -73,7 +84,14 @@ bool Worker::copyFilesWithFilter(const QString& fromDir, const QString& toDir, c
 	}
 
 	QFileInfoList fileInfoList = sourceDir.entryInfoList();
+	QProgressDialog progressDialog;
+	progressDialog.setLabelText(QStringLiteral("复制文件"));
+	progressDialog.setRange(0, fileInfoList.size());
+	progressDialog.setModal(false);
+	progressDialog.show();
+	int currentPosition = -1;
 	for (auto fileInfo : fileInfoList) {
+		progressDialog.setValue(++currentPosition);
 		if (fileInfo.fileName() == "." || fileInfo.fileName() == "..") {
 			continue;
 		}
@@ -101,12 +119,18 @@ bool Worker::copyFilesWithFilter(const QString& fromDir, const QString& toDir, c
 			}
 		}
 	}
+	progressDialog.close();
 	return true;
 }
 
-void Worker::exeCommand(const QString& command, const QString& parameter)
+void Worker::exeCommandUtillExit(const QString& command, const QString& parameter)
 {
-	SHELLEXECUTEINFOA shExecInfo = {0};
+	exeCommand(command, parameter, true);
+}
+
+void Worker::exeCommand(const QString& command, const QString& parameter, bool waitFlag)
+{
+	SHELLEXECUTEINFO shExecInfo = {0};
 
 	shExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
 
@@ -114,21 +138,33 @@ void Worker::exeCommand(const QString& command, const QString& parameter)
 
 	shExecInfo.hwnd = NULL;
 
-	shExecInfo.lpVerb = NULL;
+	shExecInfo.lpVerb = L"open";
 
+	wchar_t wideCommand[64];
 	string commandString = command.toStdString();
-	shExecInfo.lpFile = commandString.c_str();
+	MultiByteToWideChar(CP_UTF8, 0, commandString.c_str(), -1, wideCommand, 64);
+	shExecInfo.lpFile = wideCommand;
 
+	wchar_t wideParameter[260];
 	string parameterString = parameter.toStdString();
-	shExecInfo.lpParameters = parameterString.c_str();
+	MultiByteToWideChar(CP_UTF8, 0, parameterString.c_str(), -1, wideParameter, 260);
+	shExecInfo.lpParameters = wideParameter;
 
 	shExecInfo.lpDirectory = NULL;
 
-	shExecInfo.nShow = SW_HIDE;
+	shExecInfo.nShow = SW_SHOWNORMAL;
 
 	shExecInfo.hInstApp = NULL;
 
-	ShellExecuteExA(&shExecInfo);
+	bool shellResult = ShellExecuteEx(&shExecInfo);
 
-	WaitForSingleObject(shExecInfo.hProcess,INFINITE);
+	if (!shellResult) {
+		QString errorFormat("error code = %1");
+		QString error = errorFormat.arg(GetLastError());
+		QMessageBox::information(NULL, "ERROR", error);
+	}
+
+	if (waitFlag) {
+		WaitForSingleObject(shExecInfo.hProcess,INFINITE);
+	}
 }
