@@ -54,6 +54,12 @@ void SettingCenter::loadSetting()
 
 	if (!lastSourceDir.isNull()) {
 		sourceDir = lastSourceDir.asString().c_str();
+		QDir dir(sourceDir);
+		if (!dir.exists()) {
+			sourceDir = QDir::currentPath();
+		}
+	} else {
+		sourceDir = QDir::currentPath();
 	}
 }
 

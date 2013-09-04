@@ -31,8 +31,11 @@ void AppTool::selectSourceDictionary()
     QFileDialog fileDlg( this, tr("Please select folder"), initialFolder );
     fileDlg.setFileMode(QFileDialog::DirectoryOnly);
 	QString sourceDir = fileDlg.getExistingDirectory();
-	ui.sourceLineEdit->setText(sourceDir);
-	SettingCenter::getInstance().writeLastSourceDirToFile(sourceDir);
+	if (!sourceDir.isEmpty()) {
+		ui.sourceLineEdit->setText(sourceDir);
+		SettingCenter::getInstance().writeLastSourceDirToFile(sourceDir);
+	}
+
 }
 
 void AppTool::selectTargetDictionary()
@@ -41,7 +44,9 @@ void AppTool::selectTargetDictionary()
     QFileDialog fileDlg( this, tr("Please select folder"), initialFolder );
     fileDlg.setFileMode(QFileDialog::DirectoryOnly);
 	QString targetDir = fileDlg.getExistingDirectory();
-	ui.targetLineEdit->setText(targetDir);
+	if (!targetDir.isEmpty()) {
+		ui.targetLineEdit->setText(targetDir);
+	}
 }
 
 void AppTool::startApp()

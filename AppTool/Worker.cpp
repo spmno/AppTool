@@ -4,6 +4,7 @@
 #include <qdir.h>
 #include <qmessagebox.h>
 #include <qprogressdialog.h>
+#include <qdebug.h>
 #include "SettingCenter.h"
 
 Worker::Worker(void)
@@ -92,6 +93,7 @@ bool Worker::copyFilesWithFilter(const QString& fromDir, const QString& toDir, c
 	int currentPosition = -1;
 	for (auto fileInfo : fileInfoList) {
 		progressDialog.setValue(++currentPosition);
+		qDebug() << fileInfo.fileName();
 		if (fileInfo.fileName() == "." || fileInfo.fileName() == "..") {
 			continue;
 		}
