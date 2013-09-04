@@ -28,14 +28,14 @@ AppTool::~AppTool()
 void AppTool::selectSourceDictionary()
 {
 	QString initialFolder = QDir::currentPath();
-    QFileDialog fileDlg( this, tr("Please select folder"), initialFolder );
+    QFileDialog fileDlg(this, tr("Please select folder"), initialFolder);
     fileDlg.setFileMode(QFileDialog::DirectoryOnly);
 	QString sourceDir = fileDlg.getExistingDirectory();
 	if (!sourceDir.isEmpty()) {
 		ui.sourceLineEdit->setText(sourceDir);
 		SettingCenter::getInstance().writeLastSourceDirToFile(sourceDir);
 	}
-
+	this->activateWindow();
 }
 
 void AppTool::selectTargetDictionary()
@@ -47,6 +47,7 @@ void AppTool::selectTargetDictionary()
 	if (!targetDir.isEmpty()) {
 		ui.targetLineEdit->setText(targetDir);
 	}
+	this->activateWindow();
 }
 
 void AppTool::startApp()
@@ -66,7 +67,7 @@ void AppTool::startApp()
 		return;
 	}
 	settingCenter.setSourceDir(ui.sourceLineEdit->text());
-
+	settingCenter.writeLastSourceDirToFile(ui.sourceLineEdit->text());
 	if (ui.targetLineEdit->text().isEmpty()) {
 		QMessageBox::information(NULL, QStringLiteral("错误"), QStringLiteral("没有设置目标目录"));
 		return;
