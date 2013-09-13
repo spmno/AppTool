@@ -32,8 +32,8 @@ bool ConfigOutputMaker::writeConfigToFile()
 	if (!configFile.is_open()) {
 		return false;
 	}
-	for (auto configItem : configContainer_) {
-		configFile << configItem.first << "," << configItem.second << endl;
+	for (auto configKey : keyContainer_) {
+		configFile << configKey << "," << configContainer_[configKey] << endl;
 	}
 	return true;
 }

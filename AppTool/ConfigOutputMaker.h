@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include <map>
 #include <string>
 using namespace std;
@@ -15,6 +16,7 @@ public:
 	}
 	bool writeConfigToFile();
 protected:
+	vector<string> keyContainer_;
 	map<string, string> configContainer_;
 	string configFileName_;
 };
