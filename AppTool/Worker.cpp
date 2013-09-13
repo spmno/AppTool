@@ -54,6 +54,11 @@ bool Worker::startAppImp()
 		return false;
 	}
 
+	//edit appinfo
+	QString appInfoPath = targetModelDir + "/Config/AppConfigInfo.dat";
+	QString editCommand = "notepad";
+	exeCommandUtillExit(editCommand, appInfoPath);
+
 	CustomDesignConfigOutputMaker customMaker;
 		if (!customMaker.writeConfigToFile()) {
 		QMessageBox::information(NULL, QStringLiteral("ERROR"), QStringLiteral(" ‰≥ˆCUSTOM–≈œ¢ ß∞‹"));

@@ -16,7 +16,7 @@ CustomDesignConfigOutputMaker::CustomDesignConfigOutputMaker(void)
 	keyContainer_.push_back("$Hardware-Configuration");
 	configContainer_["$Hardware-Configuration"] = "A10-Flash256M-RAM512M-Nav90M-Resolution1024x600";
 
-	configFileName_ = "CustomDesign.conf";
+	configFileName_ = "CustomInfo.conf";
 }
 
 
