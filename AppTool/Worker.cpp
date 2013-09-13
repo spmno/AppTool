@@ -6,6 +6,8 @@
 #include <qprogressdialog.h>
 #include <qdebug.h>
 #include "SettingCenter.h"
+#include "CustomDesignConfigOutputMaker.h"
+#include "AppConfigOutputMaker.h"
 
 Worker::Worker(void)
 {
@@ -38,10 +40,25 @@ bool Worker::startAppImp()
 		toDir.remove(zipName);
 	}
 	
+	/*
 	//edit appinfo
 	QString appInfoPath = targetModelDir + "/Config/AppConfigInfo.dat";
 	QString editCommand = "notepad";
 	exeCommandUtillExit(editCommand, appInfoPath);
+	*/
+
+	//save appinfo and config info
+	AppConfigOutputMaker appMaker;
+	if (!appMaker.writeConfigToFile()) {
+		QMessageBox::information(NULL, QStringLiteral("ERROR"), QStringLiteral("输出APP信息失败"));
+		return false;
+	}
+
+	CustomDesignConfigOutputMaker customMaker;
+		if (!customMaker.writeConfigToFile()) {
+		QMessageBox::information(NULL, QStringLiteral("ERROR"), QStringLiteral("输出CUSTOM信息失败"));
+		return false;
+	}
 
 	//create md5
 	QString md5PathFormat("%1\\%2");

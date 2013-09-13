@@ -76,7 +76,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AppConfigOutputMaker.cpp" />
     <ClCompile Include="apptool.cpp" />
+    <ClCompile Include="ConfigOutputMaker.cpp" />
+    <ClCompile Include="CustomDesignConfigOutputMaker.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_apptool.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -118,6 +121,9 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AppConfigOutputMaker.h" />
+    <ClInclude Include="ConfigOutputMaker.h" />
+    <ClInclude Include="CustomDesignConfigOutputMaker.h" />
     <ClInclude Include="GeneratedFiles\ui_apptool.h" />
     <ClInclude Include="SettingCenter.h" />
     <ClInclude Include="Worker.h" />
