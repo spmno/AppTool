@@ -26,7 +26,7 @@ AppConfigOutputMaker::AppConfigOutputMaker(void)
 	keyContainer_.push_back("$ReverseVideoCardPath");
 	configContainer_["$ReverseVideoCardPath"] = "\\CardC\\";
 	keyContainer_.push_back("$ReverseVideoSwitch");
-	configContainer_["$ReverseVideoSwitch"] = "1";
+	configContainer_["$ReverseVideoSwitch"] = "0";
 	keyContainer_.push_back("$SkinStyle");
 	configContainer_["$SkinStyle"] = "1";
 	keyContainer_.push_back("$AlternativeLogoPath");
