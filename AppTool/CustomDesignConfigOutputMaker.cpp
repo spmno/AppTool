@@ -3,18 +3,18 @@
 
 CustomDesignConfigOutputMaker::CustomDesignConfigOutputMaker(void)
 {
-	keyContainer_.push_back("$Product-Model");
-	configContainer_["$Product-Model"] = SettingCenter::getInstance().getCurrentModelName().toStdString();
-	keyContainer_.push_back("$Sales-Area");
-	configContainer_["$Sales-Area"] = "Home";
-	keyContainer_.push_back("$Sales-Channel");
-	configContainer_["$Sales-Channel"] = "4S-Store-Way";
-	keyContainer_.push_back("$Edition-Level");
-	configContainer_["$Edition-Level"] = "Deluxe-Edition";
-	keyContainer_.push_back("$Operating-System");
-	configContainer_["$Operating-System"] = "Windows-CE";
-	keyContainer_.push_back("$Hardware-Configuration");
-	configContainer_["$Hardware-Configuration"] = "A10-Flash256M-RAM512M-Nav90M-Resolution1024x600";
+	keyContainer_.push_back(L"$Product-Model");
+	configContainer_[L"$Product-Model"] = SettingCenter::getInstance().getCurrentModelNameW();
+	keyContainer_.push_back(L"$Sales-Area");
+	configContainer_[L"$Sales-Area"] = L"Home";
+	keyContainer_.push_back(L"$Sales-Channel");
+	configContainer_[L"$Sales-Channel"] = L"4S-Store-Way";
+	keyContainer_.push_back(L"$Edition-Level");
+	configContainer_[L"$Edition-Level"] = L"Deluxe-Edition";
+	keyContainer_.push_back(L"$Operating-System");
+	configContainer_[L"$Operating-System"] = L"Windows-CE";
+	keyContainer_.push_back(L"$Hardware-Configuration");
+	configContainer_[L"$Hardware-Configuration"] = L"A10-Flash256M-RAM512M-Nav90M-Resolution1024x600";
 
 	configFileName_ = "CustomInfo.conf";
 }

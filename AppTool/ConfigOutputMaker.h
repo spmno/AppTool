@@ -9,15 +9,15 @@ class ConfigOutputMaker
 public:
 	ConfigOutputMaker(void);
 	~ConfigOutputMaker(void);
-	void addConfigValue(const string& key, const string& value);
-	map<string, string>& getConfigContainer()
+	void addConfigValue(const wstring& key, const wstring& value);
+	map<wstring, wstring>& getConfigContainer()
 	{
 		return configContainer_;
 	}
 	bool writeConfigToFile();
 protected:
-	vector<string> keyContainer_;
-	map<string, string> configContainer_;
+	vector<wstring> keyContainer_;
+	map<wstring, wstring> configContainer_;
 	string configFileName_;
 };
 

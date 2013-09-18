@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <qstring.h>
+#include <Windows.h>
 using namespace std;
 
 class SettingCenter
@@ -52,6 +53,14 @@ public:
 	{
 		return currentModelName;
 	}
+	wstring& getCurrentModelNameW()
+	{
+		wchar_t wideConfigFileName[260];
+		string modelName =  SettingCenter::getInstance().getCurrentModelName().toStdString();
+		MultiByteToWideChar(CP_UTF8, 0, modelName.c_str(), -1, wideConfigFileName, 260);
+		currentModelNameW = wideConfigFileName;
+		return currentModelNameW;
+	}
 	QString& getSourceDir()
 	{
 		return sourceDir;
@@ -81,6 +90,7 @@ private:
 	QString updateMethodString;
 	int modelIndex;
 	QString currentModelName;
+	wstring currentModelNameW;
 	QString sourceDir;
 	QString targetDir;
 };

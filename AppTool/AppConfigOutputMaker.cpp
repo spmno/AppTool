@@ -3,34 +3,34 @@
 
 AppConfigOutputMaker::AppConfigOutputMaker(void)
 {
-	keyContainer_.push_back("$GpsCardPath");
-	configContainer_["$GpsCardPath"] = "\\StorageCard\\";
-	keyContainer_.push_back("$MediaCardPath");
-	configContainer_["$MediaCardPath"] = "\\StorageCard\\";
-	keyContainer_.push_back("$HardDiskPath");
-	configContainer_["$HardDiskPath"] = "\\USB\\";
-	keyContainer_.push_back("$VersionInfo");
-	configContainer_["$VersionInfo"] = "2013-01-05-S208-A537";
-	keyContainer_.push_back("$ProductNo");
-	configContainer_["$ProductNo"] = SettingCenter::getInstance().getCurrentModelName().toStdString();
-	keyContainer_.push_back("$AnimatorLevel");
-	configContainer_["$AnimatorLevel"] = "1";
-	keyContainer_.push_back("$VolumeValueMin");
-	configContainer_["$VolumeValueMin"] = "50";
-	keyContainer_.push_back("$VolumeValueMax");
-	configContainer_["$VolumeValueMax"] = "100";
-	keyContainer_.push_back("$DvrCardPath");
-	configContainer_["$DvrCardPath"] = "\\CardC\\";
-	keyContainer_.push_back("$DvrCardVolumeName");
-	configContainer_["$DvrCardVolumeName"] = "SD Card C";
-	keyContainer_.push_back("$ReverseVideoCardPath");
-	configContainer_["$ReverseVideoCardPath"] = "\\CardC\\";
-	keyContainer_.push_back("$ReverseVideoSwitch");
-	configContainer_["$ReverseVideoSwitch"] = "0";
-	keyContainer_.push_back("$SkinStyle");
-	configContainer_["$SkinStyle"] = "1";
-	keyContainer_.push_back("$AlternativeLogoPath");
-	configContainer_["$AlternativeLogoPath"] = "\\FlashApp\\logo\\";
+	keyContainer_.push_back(L"$GpsCardPath");
+	configContainer_[L"$GpsCardPath"] = L"\\StorageCard\\";
+	keyContainer_.push_back(L"$MediaCardPath");
+	configContainer_[L"$MediaCardPath"] = L"\\StorageCard\\";
+	keyContainer_.push_back(L"$HardDiskPath");
+	configContainer_[L"$HardDiskPath"] = L"\\USB\\";
+	keyContainer_.push_back(L"$VersionInfo");
+	configContainer_[L"$VersionInfo"] = L"2013-01-05-S208-A537";
+	keyContainer_.push_back(L"$ProductNo");
+	configContainer_[L"$ProductNo"] = SettingCenter::getInstance().getCurrentModelNameW();
+	keyContainer_.push_back(L"$AnimatorLevel");
+	configContainer_[L"$AnimatorLevel"] = L"1";
+	keyContainer_.push_back(L"$VolumeValueMin");
+	configContainer_[L"$VolumeValueMin"] = L"50";
+	keyContainer_.push_back(L"$VolumeValueMax");
+	configContainer_[L"$VolumeValueMax"] = L"100";
+	keyContainer_.push_back(L"$DvrCardPath");
+	configContainer_[L"$DvrCardPath"] = L"\\CardC\\";
+	keyContainer_.push_back(L"$DvrCardVolumeName");
+	configContainer_[L"$DvrCardVolumeName"] = L"SD Card C";
+	keyContainer_.push_back(L"$ReverseVideoCardPath");
+	configContainer_[L"$ReverseVideoCardPath"] = L"\\CardC\\";
+	keyContainer_.push_back(L"$ReverseVideoSwitch");
+	configContainer_[L"$ReverseVideoSwitch"] = L"0";
+	keyContainer_.push_back(L"$SkinStyle");
+	configContainer_[L"$SkinStyle"] = L"1";
+	keyContainer_.push_back(L"$AlternativeLogoPath");
+	configContainer_[L"$AlternativeLogoPath"] = L"\\FlashApp\\logo\\";
 
 	configFileName_ = "AppConfigInfo.dat";
 }
