@@ -14,7 +14,7 @@ public:
 	{
 		return configContainer_;
 	}
-	bool writeConfigToFile();
+	virtual bool writeConfigToFile();
 protected:
 	vector<wstring> keyContainer_;
 	map<wstring, wstring> configContainer_;

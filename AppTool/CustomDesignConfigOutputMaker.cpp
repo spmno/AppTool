@@ -1,5 +1,8 @@
 #include "CustomDesignConfigOutputMaker.h"
 #include "SettingCenter.h"
+#include <fstream>
+
+using namespace std;
 
 CustomDesignConfigOutputMaker::CustomDesignConfigOutputMaker(void)
 {
@@ -23,4 +26,25 @@ CustomDesignConfigOutputMaker::CustomDesignConfigOutputMaker(void)
 CustomDesignConfigOutputMaker::~CustomDesignConfigOutputMaker(void)
 {
 
+}
+
+bool CustomDesignConfigOutputMaker::writeConfigToFile()
+{
+	wchar_t wideConfigFileName[260];
+	SettingCenter settingCenter = SettingCenter::getInstance();
+	string configFileName = settingCenter.getTargetDir().toStdString() + 
+		"/" + settingCenter.getCurrentModelName().toStdString() + 
+		"/F33APP/Config/" + configFileName_;
+	MultiByteToWideChar(CP_UTF8, 0, configFileName.c_str(), -1, wideConfigFileName, 260);
+
+	wofstream configFile;
+	configFile.open(wideConfigFileName);
+	if (!configFile.is_open()) {
+		return false;
+	}
+	for (auto configKey : keyContainer_) {
+		configFile << configKey << "," << configContainer_[configKey] << endl;
+	}
+	
+	return true;
 }

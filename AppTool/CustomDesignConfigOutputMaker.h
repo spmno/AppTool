@@ -6,5 +6,6 @@ class CustomDesignConfigOutputMaker :
 public:
 	CustomDesignConfigOutputMaker(void);
 	~CustomDesignConfigOutputMaker(void);
+	virtual bool writeConfigToFile();
 };
 
