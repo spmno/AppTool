@@ -40,7 +40,7 @@ void SettingCenter::loadSetting()
 	}
 
 	Json::Value models = jsonObject["Model"];
-	Json::Value filters = jsonObject["Filter"];
+	//Json::Value filters = jsonObject["Filter"];
 	Json::Value lastSourceDir = jsonObject["SourceDir"];
 
 	// save model and filter to globa setting
@@ -48,9 +48,11 @@ void SettingCenter::loadSetting()
 		modelContainer.push_back(models[i].asString());
 	}
 
+	/* remove the filter to single file
 	for (int i = 0; i < filters.size(); ++i) {
 		filterContainer.push_back(filters[i].asString());
 	}
+	*/
 
 	if (!lastSourceDir.isNull()) {
 		sourceDir = lastSourceDir.asString().c_str();
@@ -60,6 +62,31 @@ void SettingCenter::loadSetting()
 		}
 	} else {
 		sourceDir = QDir::currentPath();
+	}
+}
+
+void SettingCenter::loadFilter()
+{
+	string jsonFileName = targetDir.toStdString() + "/Filter/" + currentModelName.toStdString() + ".json";
+	wchar_t wideJsonFileName[260];
+	ifstream jsonFileStream;
+	MultiByteToWideChar(CP_UTF8, 0, jsonFileName.c_str(), -1, wideJsonFileName, 260);
+	jsonFileStream.open(wideJsonFileName);
+	if (!jsonFileStream.is_open()) {
+		MessageBox(NULL, wideJsonFileName, L"Filter error", MB_TOPMOST);
+		return ;
+	}
+	Json::Reader reader;
+	Json::Value jsonObject;
+	if (!reader.parse(jsonFileStream, jsonObject, false)) {
+		QMessageBox::information(NULL, QStringLiteral("ERROR"), QStringLiteral("解析文件错误"));
+		return ;
+	}
+	jsonFileStream.close();
+	Json::Value filters = jsonObject["Filter"];
+	filterContainer.clear();
+	for (int i = 0; i < filters.size(); ++i) {
+		filterContainer.push_back(filters[i].asString());
 	}
 }
 
@@ -87,7 +114,7 @@ bool SettingCenter::writeLastSourceDirToFile(QString& dir)
 	ofstream jsonOutStream;
 	Json::FastWriter writer;
 	jsonOutStream.open(wideJsonFileName);
-	if (!jsonOutStream.is_open()) {
+	if (!jsonOutStream.is_open()) {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
 		QMessageBox::information(NULL, QStringLiteral("ERROR"), QStringLiteral("输出配置文件错误"));
 		return false;
 	}

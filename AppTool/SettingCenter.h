@@ -79,11 +79,13 @@ public:
 	}
 	vector<string>& getFilter()
 	{
+		loadFilter();
 		return filterContainer;
 	}
 	bool writeLastSourceDirToFile(QString& dir);
 private:
 	SettingCenter(void);
+	void loadFilter();
 	vector<string> modelContainer;
 	vector<string> filterContainer;
 	UPDATE_METHOD updateMethod;

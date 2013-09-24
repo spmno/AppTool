@@ -26,6 +26,11 @@ bool Worker::startAppImp()
 	QString targetModelDir = targetDir + "/" + settingCenter.getCurrentModelName() + "/F33APP";
 	QString sourceDir = settingCenter.getSourceDir();
 	vector<string>& filter = settingCenter.getFilter();
+
+	if (filter.empty()) {
+		QMessageBox::information(NULL, QStringLiteral("´íÎó"), QStringLiteral("¹ýÂËÆ÷´íÎó"));
+		return false;
+	}
 	
 	//copy files
 	if (!copyFilesWithFilter(sourceDir, targetModelDir, filter)) {
@@ -75,7 +80,7 @@ bool Worker::startAppImp()
 	exeCommandUtillExit(md5Command, md5Parameter);
 
 	//pagage zip
-	QString oldPath = QDir::currentPath();
+	QString oldPath = targetDir;
 	QString modelPath = oldPath + "/" + settingCenter.getCurrentModelName();
 	QDir::setCurrent(modelPath);
 	QString zipCommand = oldPath + "/zip.exe";
