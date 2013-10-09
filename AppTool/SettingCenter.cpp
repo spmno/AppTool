@@ -8,6 +8,8 @@
 #include "3party\jsoncpp-src-0.5.0\include\json\json.h"
 using namespace std;
 
+SettingCenter SettingCenter::instance;
+
 SettingCenter::SettingCenter(void)
 {
 }
@@ -88,6 +90,13 @@ void SettingCenter::loadFilter()
 	for (int i = 0; i < filters.size(); ++i) {
 		filterContainer.push_back(filters[i].asString());
 	}
+
+	Json::Value mapModel = jsonObject["MapModel"];
+	if (mapModel.isNull()) {
+		instance.currentMapModelName = currentModelName;
+	} else {
+		currentMapModelName = mapModel.asCString();
+	}
 }
 
 bool SettingCenter::writeLastSourceDirToFile(QString& dir) 
@@ -126,6 +135,6 @@ bool SettingCenter::writeLastSourceDirToFile(QString& dir)
 
 SettingCenter& SettingCenter::getInstance()
 {
-	static SettingCenter instance;
+	
 	return instance;
 }

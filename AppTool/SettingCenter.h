@@ -61,6 +61,14 @@ public:
 		currentModelNameW = wideConfigFileName;
 		return currentModelNameW;
 	}
+	wstring& getCurrentMapModelName()
+	{
+		wchar_t wideConfigFileName[260];
+		string modelName =  SettingCenter::getInstance().currentMapModelName.toStdString();
+		MultiByteToWideChar(CP_UTF8, 0, modelName.c_str(), -1, wideConfigFileName, 260);
+		currentMapModelNameW = wideConfigFileName;
+		return currentMapModelNameW;
+	}
 	QString& getSourceDir()
 	{
 		return sourceDir;
@@ -85,6 +93,8 @@ public:
 	bool writeLastSourceDirToFile(QString& dir);
 private:
 	SettingCenter(void);
+	SettingCenter(SettingCenter &settingCenter);
+	static SettingCenter instance;
 	void loadFilter();
 	vector<string> modelContainer;
 	vector<string> filterContainer;
@@ -93,6 +103,8 @@ private:
 	int modelIndex;
 	QString currentModelName;
 	wstring currentModelNameW;
+	QString currentMapModelName;
+	wstring currentMapModelNameW;
 	QString sourceDir;
 	QString targetDir;
 };

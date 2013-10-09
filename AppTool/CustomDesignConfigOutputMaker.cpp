@@ -7,7 +7,7 @@ using namespace std;
 CustomDesignConfigOutputMaker::CustomDesignConfigOutputMaker(void)
 {
 	keyContainer_.push_back(L"$Product-Model");
-	configContainer_[L"$Product-Model"] = SettingCenter::getInstance().getCurrentModelNameW();
+	configContainer_[L"$Product-Model"] = SettingCenter::getInstance().getCurrentMapModelName();
 	keyContainer_.push_back(L"$Sales-Area");
 	configContainer_[L"$Sales-Area"] = L"Home";
 	keyContainer_.push_back(L"$Sales-Channel");
@@ -31,7 +31,7 @@ CustomDesignConfigOutputMaker::~CustomDesignConfigOutputMaker(void)
 bool CustomDesignConfigOutputMaker::writeConfigToFile()
 {
 	wchar_t wideConfigFileName[260];
-	SettingCenter settingCenter = SettingCenter::getInstance();
+	SettingCenter& settingCenter = SettingCenter::getInstance();
 	string configFileName = settingCenter.getTargetDir().toStdString() + 
 		"/" + settingCenter.getCurrentModelName().toStdString() + 
 		"/F33APP/Config/" + configFileName_;

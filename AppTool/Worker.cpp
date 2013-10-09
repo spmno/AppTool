@@ -21,7 +21,7 @@ Worker::~Worker(void)
 bool Worker::startAppImp()
 {
 	//prepare -- make dir name, get filter
-	SettingCenter settingCenter = SettingCenter::getInstance();
+	SettingCenter& settingCenter = SettingCenter::getInstance();
 	QString targetDir = settingCenter.getTargetDir();
 	QString targetModelDir = targetDir + "/" + settingCenter.getCurrentModelName() + "/F33APP";
 	QString sourceDir = settingCenter.getSourceDir();

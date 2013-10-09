@@ -22,7 +22,7 @@ void ConfigOutputMaker::addConfigValue(const wstring& key, const wstring& value)
 bool ConfigOutputMaker::writeConfigToFile()
 {
 	wchar_t wideConfigFileName[260];
-	SettingCenter settingCenter = SettingCenter::getInstance();
+	SettingCenter& settingCenter = SettingCenter::getInstance();
 	string configFileName = settingCenter.getTargetDir().toStdString() + 
 		"/" + settingCenter.getCurrentModelName().toStdString() + 
 		"/F33APP/Config/" + configFileName_;
